@@ -19,3 +19,16 @@ def create_room(name):
 
 def get_room(room_id):
     return room_data.get(room_id, None)
+
+def update_room(room_id, new_name):
+    r = room_data.get(room_id)
+    if r is not None:
+        r.name = new_name
+        return r
+    return None
+
+def delete_room(room_id):
+    if room_id in room_data:
+        del room_data[room_id]
+        return True
+    return False

@@ -20,3 +20,15 @@ def create_house(name):
 def get_house(house_id):
     return house_data.get(house_id, None)
 
+def update_house(house_id, new_name):
+    h = house_data.get(house_id)
+    if h is not None:
+        h.name = new_name
+        return h
+    return None
+
+def delete_house(house_id):
+    if house_id in house_data:
+        del house_data[house_id]
+        return True
+    return False

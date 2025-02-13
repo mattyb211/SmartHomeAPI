@@ -19,3 +19,17 @@ def create_user(username, email):
 
 def get_user(user_id):
     return user_data.get(user_id, None)
+
+def update_user(user_id, new_username, new_email):
+    u = user_data.get(user_id)
+    if u is not None:
+        u.username = new_username
+        u.email = new_email
+        return u
+    return None
+
+def delete_user(user_id):
+    if user_id in user_data:
+        del user_data[user_id]
+        return True
+    return False

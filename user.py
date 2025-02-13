@@ -7,29 +7,51 @@ class User:
         self.username = username
         self.email = email
 
-# Functions to create and get users
-
 def create_user(username, email):
     global user_id_counter
     user_id_counter += 1
-    user_id = str(user_id_counter)
-    new_user = User(user_id, username, email)
-    user_data[user_id] = new_user
-    return new_user
+    uid = str(user_id_counter)
+    new_user = User(uid, username, email)
+    user_data[uid] = new_user
+    return {
+        "success": True,
+        "data": {
+            "id": new_user.id,
+            "username": new_user.username,
+            "email": new_user.email
+        }
+    }
 
 def get_user(user_id):
-    return user_data.get(user_id, None)
+    if user_id not in user_data:
+        return {"error": f"User with ID {user_id} not found."}
+    u = user_data[user_id]
+    return {
+        "success": True,
+        "data": {
+            "id": u.id,
+            "username": u.username,
+            "email": u.email
+        }
+    }
 
 def update_user(user_id, new_username, new_email):
-    u = user_data.get(user_id)
-    if u is not None:
-        u.username = new_username
-        u.email = new_email
-        return u
-    return None
+    if user_id not in user_data:
+        return {"error": f"Cannot update: user with ID {user_id} not found."}
+    u = user_data[user_id]
+    u.username = new_username
+    u.email = new_email
+    return {
+        "success": True,
+        "data": {
+            "id": u.id,
+            "username": u.username,
+            "email": u.email
+        }
+    }
 
 def delete_user(user_id):
-    if user_id in user_data:
-        del user_data[user_id]
-        return True
-    return False
+    if user_id not in user_data:
+        return {"error": f"Cannot delete: user with ID {user_id} not found."}
+    del user_data[user_id]
+    return {"success": True}

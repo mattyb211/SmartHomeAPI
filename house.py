@@ -32,3 +32,4 @@ def delete_house(house_id):
         del house_data[house_id]
         return True
     return False
+
